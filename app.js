@@ -24,12 +24,22 @@ const mineGrid = (arr) => {
     //Create a helper function that access the element position (y,x) in arr. if the y index is valid or exists 
     //I want to return arr[y][x]; otherwise return null (This will prevent accessing undefined elements and to avoid errors
     const checkAccess = (y,x) => arr[y] ? arr[y][x] : null
-    //Create another helper function that calculates the number of adjacent mines around the ell at position (y,x)
+    //Note Create another helper function that calculates the number of adjacent mines around the ell at position (y,x)
     const getMine = (x,y) => {
-        //an array is costructed with elements that represents the content of adjacent cells
+        //Note an array is costructed with elements that represents the content of adjacent cells
         //we are going to use checkAccess for each of the eight possible adjacent positions
         return [
-
-        ]
+            checkAccess(y+1, x), //checks the cell directly below the current (y,x)
+             checkAccess(y+1, x+1), //checks cell diagonally below and to the right of the current cell
+              checkAccess(y+1, x-1), //checks cell  diagonally below and to the left of the current cell
+             checkAccess(y, x+1),//check cell directly to the right of current cell
+            checkAccess(y, x-1)//check cell directly to the left
+            checkAccess(y-1, x),//check cell directly above
+            checkAccess(y-1, x+1)//Checks diagonally above and to the right
+            checkAccess(y-1, x-1)//checks cell diagonally above and to the left
+        //Note construct an array of values that represent the contents of cells adjacent, after the constructing of the array
+    //we will use filter method to keep only those elements that are mines ('$') .
+      ].filter(adjCell = adjCell === "$").length.toString()
     }
+    return arr.map((r,y) => r.map((c,x) => c === "-" ? getMine(x,y) : c))
 }
